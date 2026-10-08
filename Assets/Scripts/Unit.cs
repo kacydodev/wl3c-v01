@@ -3,29 +3,38 @@ using UnityEngine.InputSystem;
 
 public class Unit : MonoBehaviour
 {
-  [SerializeField] private float moveSpeed = 5f;
-  [SerializeField] private float rotateSpeed = 10f;
-  [SerializeField] private float stoppingDistance = 0.05f;
-  
-  private Vector3 targetPosition;
+  [SerializeField] float moveSpeed = 5f;
+  [SerializeField] float rotateSpeed = 10f;
+  [SerializeField] float stoppingDistance = 0.05f;
 
-  private void Start()
+  Vector3 targetPosition;
+
+  void Awake()
   {
     // Prevent unintended movement toward (0, 0, 0) at start
     targetPosition = transform.position;
   }
 
-  private void Update()
+  void Update()
   {
-    if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
+    if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
     {
-      Move(new Vector3(5f, 0f, 5f));
+      // Only move if the mouse raycast hits a valid position (not Vector3.zero)
+      if (MouseRaycast.GetPosition() != Vector3.zero)
+      {
+        Move(MouseRaycast.GetPosition());
+      }
+      // TODO: remove on prod
+      else
+      {
+        Debug.Log("MouseRaycast: No ground collider detected.");
+      }
     }
-    
+
     // Only compute movement and rotation when distance remains
     if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
     {
-      Vector3 moveDirection = (targetPosition - transform.position).normalized;
+      var moveDirection = (targetPosition - transform.position).normalized;
 
       if (moveDirection != Vector3.zero)
       {
