@@ -6,35 +6,36 @@ public class Unit : MonoBehaviour
   [SerializeField] float moveSpeed = 5f;
   [SerializeField] float rotateSpeed = 10f;
   [SerializeField] float stoppingDistance = 0.05f;
-
-  Vector3 targetPosition;
+  private Animator unitAnimator;
+  private Vector3 targetPosition;
 
   void Awake()
   {
-    // Prevent unintended movement toward (0, 0, 0) at start
     targetPosition = transform.position;
+    unitAnimator = GetComponentInChildren<Animator>();
   }
 
   void Update()
   {
+    // Mouse Raycast Control
     if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
     {
-      // Only move if the mouse raycast hits a valid position (not Vector3.zero)
       if (MouseRaycast.GetPosition() != Vector3.zero)
       {
         Move(MouseRaycast.GetPosition());
       }
-      // TODO: remove on prod
       else
       {
+        // TODO: remove on prod
         Debug.Log("MouseRaycast: No ground collider detected.");
       }
     }
 
-    // Only compute movement and rotation when distance remains
+    // Movement and Rotation Control
     if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
     {
       var moveDirection = (targetPosition - transform.position).normalized;
+      unitAnimator.SetBool("IsWalking", true);
 
       if (moveDirection != Vector3.zero)
       {
@@ -50,6 +51,10 @@ public class Unit : MonoBehaviour
         targetPosition,
         moveSpeed * Time.deltaTime
       );
+    }
+    else
+    {
+      unitAnimator.SetBool("IsWalking", false);
     }
   }
 
