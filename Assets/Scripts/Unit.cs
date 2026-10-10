@@ -6,6 +6,9 @@ public class Unit : MonoBehaviour
   [SerializeField] float moveSpeed = 5f;
   [SerializeField] float rotateSpeed = 10f;
   [SerializeField] float stoppingDistance = 0.05f;
+  [SerializeField] public bool isSelected;
+  [SerializeField] public float selectedDelay;
+  [SerializeField] GameObject uiSelectRing;
   private Animator unitAnimator;
   private Vector3 targetPosition;
 
@@ -13,23 +16,25 @@ public class Unit : MonoBehaviour
   {
     targetPosition = transform.position;
     unitAnimator = GetComponentInChildren<Animator>();
+    selectedDelay = 0;
   }
 
   void Update()
   {
+    SetSelectRing(isSelected);
+    
     // Mouse Raycast Control
-    if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+    if (isSelected && selectedDelay <= 0)
     {
-      if (MouseRaycast.GetPosition() != Vector3.zero)
+      if (Mouse.current.leftButton.wasPressedThisFrame)
       {
-        Move(MouseRaycast.GetPosition());
-      }
-      else
-      {
-        // TODO: remove on prod
-        Debug.Log("MouseRaycast: No ground collider detected.");
+        if (MouseRaycast.GetPosition() != Vector3.zero)
+        {
+          Move(MouseRaycast.GetPosition());
+        }
       }
     }
+
 
     // Movement and Rotation Control
     if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
@@ -56,6 +61,15 @@ public class Unit : MonoBehaviour
     {
       unitAnimator.SetBool("IsWalking", false);
     }
+  }
+
+  void SetSelectRing(bool isActive)
+  {
+    if(selectedDelay > 0)
+    {
+      selectedDelay -= Time.deltaTime;
+    }
+    uiSelectRing.SetActive(isActive);
   }
 
   public void Move(Vector3 targetPosition)

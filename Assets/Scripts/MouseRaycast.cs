@@ -8,6 +8,7 @@ public class MouseRaycast : MonoBehaviour
 
   // To be selected in the inspector
   [SerializeField] LayerMask raycastLayerMask;
+  [SerializeField] LayerMask unitsLayerMask;
 
   void Start()
   {
@@ -26,14 +27,27 @@ public class MouseRaycast : MonoBehaviour
   {
     var mousePos = Mouse.current.position.ReadValue();
     var ray = targetCamera.ScreenPointToRay(mousePos);
-    Physics.Raycast(ray, out var hit, float.MaxValue, instance.raycastLayerMask);
 
-    // if (!hit.collider)
-    // {
-    //   Debug.Log("MouseRaycast: No collider detected.");
-    //   return Vector3.zero;
-    // }
+    if (Physics.Raycast(ray, out var hit, float.MaxValue, instance.raycastLayerMask))
+    {
+      if (hit.collider.CompareTag("SelectableUnits"))
+      {
+        return Vector3.zero;
+      }
+      return hit.point;
+    }
+    return Vector3.zero;
+  }
 
-    return hit.point;
+  public static GameObject GetUnit()
+  {
+    var mousePos = Mouse.current.position.ReadValue();
+    var ray = targetCamera.ScreenPointToRay(mousePos);
+    if (Physics.Raycast(ray, out var hit, float.MaxValue, instance.unitsLayerMask))
+    {
+      return hit.collider.gameObject;
+    }
+
+    return null;
   }
 }
