@@ -148,8 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b7af25de7332840b5e972b701afdb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectionManager
-  SelectedUnit: {fileID: 0}
-  DefaultUnit: {fileID: 1892097236}
+  defaultUnit: {fileID: 1892097238}
 --- !u!4 &325520479
 Transform:
   m_ObjectHideFlags: 0
@@ -846,11 +845,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d4028b121cb2544f9dd0f719daeb364, type: 3}
---- !u!1 &1892097236 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4394332161183079034, guid: 5d4028b121cb2544f9dd0f719daeb364, type: 3}
+--- !u!114 &1892097238 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5347933664924043747, guid: 5d4028b121cb2544f9dd0f719daeb364, type: 3}
   m_PrefabInstance: {fileID: 1541424617641005325}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e285c0e8c34054c49a4b24a83f04e4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Unit
 --- !u!1001 &1541424617641005325
 PrefabInstance:
   m_ObjectHideFlags: 0
