@@ -12,7 +12,6 @@ public class UnitActionSystem : MonoBehaviour
   [SerializeField] public Unit defaultUnit;
 
   Unit selectedUnit;
-  Unit unit;
   [SerializeField] LayerMask unitsLayerMask;
 
   void Awake()

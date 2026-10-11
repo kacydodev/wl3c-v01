@@ -18,8 +18,6 @@ public class Unit : MonoBehaviour
 
   void Update()
   {
-    // Mouse Event
-
     // Movement and Rotation Control
     if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
     {
