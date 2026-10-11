@@ -39,15 +39,16 @@ public class MouseRaycast : MonoBehaviour
     return Vector3.zero;
   }
 
-  public static GameObject GetUnit()
+  public static Unit GetUnit()
   {
     var mousePos = Mouse.current.position.ReadValue();
     var ray = targetCamera.ScreenPointToRay(mousePos);
-    if (Physics.Raycast(ray, out var hit, float.MaxValue, instance.unitsLayerMask))
+    
+    if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, instance.unitsLayerMask))
     {
-      return hit.collider.gameObject;
+      return raycastHit.transform.TryGetComponent<Unit>(out Unit unit) ? unit : null;
     }
-
+    
     return null;
   }
 }

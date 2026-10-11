@@ -5,15 +5,15 @@ using UnityEngine.InputSystem;
 public class SelectionManager : MonoBehaviour
 {
   // A HashSet prevents duplicate references and provides O(1) containment checks
-  private HashSet<GameObject> SelectableUnits = new HashSet<GameObject>();
-  GameObject SelectedUnit;
-  [SerializeField] GameObject DefaultUnit;
+  private HashSet<Unit> SelectableUnits = new HashSet<Unit>();
+  Unit selectedUnit;
+  [SerializeField] Unit defaultUnit;
 
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
     PopulateSelectableUnits();
-    SetSelectedUnit(DefaultUnit);
+    SetSelectedUnit(defaultUnit);
     // Debug.Log($"Default: {SelectedUnit}");
   }
 
@@ -27,21 +27,21 @@ public class SelectionManager : MonoBehaviour
       {
         if (unit && SelectableUnits.Contains(unit))
         {
-          SelectedUnit.GetComponent<Unit>().isSelected = false;
-          SelectedUnit = null;
+          selectedUnit.GetComponent<Unit>().isSelected = false;
+          selectedUnit = null;
           SetSelectedUnit(unit);
         }
       }
     }
   }
 
-  void SetSelectedUnit(GameObject unit)
+  void SetSelectedUnit(Unit unit)
   {
     float delay = 0.25f;
     
-    SelectedUnit = unit;
-    SelectedUnit.GetComponent<Unit>().isSelected = true;
-    SelectedUnit.GetComponent<Unit>().selectedDelay = delay;
+    selectedUnit = unit;
+    selectedUnit.GetComponent<Unit>().isSelected = true;
+    selectedUnit.GetComponent<Unit>().selectedDelay = delay;
     // Debug.Log($"Selected: {SelectedUnit}");
   }
 
@@ -49,14 +49,26 @@ public class SelectionManager : MonoBehaviour
   void PopulateSelectableUnits()
   {
     GameObject[] foundUnits = GameObject.FindGameObjectsWithTag("SelectableUnits");
-
-    foreach (GameObject unit in foundUnits)
+    
+    foreach(GameObject unit in foundUnits)
     {
       if (unit)
       {
-        SelectableUnits.Add(unit);
+        var unitComponent = unit.GetComponent<Unit>();
+        if (unitComponent != null)
+        {
+          SelectableUnits.Add(unitComponent);
+        }
       }
     }
+
+    // foreach (GameObject unit in foundUnits)
+    // {
+    //   if (unit)
+    //   {
+    //     SelectableUnits.Add(unit);
+    //   }
+    // }
 
     // Debug.Log($"Successfully registered {SelectableUnits.Count} unique selectable unit(s).");
   }
