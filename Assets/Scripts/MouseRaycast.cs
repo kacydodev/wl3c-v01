@@ -8,12 +8,11 @@ public class MouseRaycast : MonoBehaviour
 
   // To be selected in the inspector
   [SerializeField] LayerMask raycastLayerMask;
-  [SerializeField] LayerMask unitsLayerMask;
 
   void Start()
   {
-    targetCamera = Camera.main;
     instance = this;
+    targetCamera = Camera.main;
   }
 
   void Update()
@@ -37,18 +36,5 @@ public class MouseRaycast : MonoBehaviour
       return hit.point;
     }
     return Vector3.zero;
-  }
-
-  public static Unit GetUnit()
-  {
-    var mousePos = Mouse.current.position.ReadValue();
-    var ray = targetCamera.ScreenPointToRay(mousePos);
-    
-    if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, instance.unitsLayerMask))
-    {
-      return raycastHit.transform.TryGetComponent<Unit>(out Unit unit) ? unit : null;
-    }
-    
-    return null;
   }
 }

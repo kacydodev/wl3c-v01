@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SelectionManager : MonoBehaviour
+public class LegacySelectionManager : MonoBehaviour
 {
   // A HashSet prevents duplicate references and provides O(1) containment checks
   private HashSet<Unit> SelectableUnits = new HashSet<Unit>();
@@ -10,7 +10,7 @@ public class SelectionManager : MonoBehaviour
   [SerializeField] Unit defaultUnit;
 
   // Start is called once before the first execution of Update after the MonoBehaviour is created
-  void Start()
+  void Awake()
   {
     PopulateSelectableUnits();
     SetSelectedUnit(defaultUnit);
