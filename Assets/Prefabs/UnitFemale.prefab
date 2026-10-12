@@ -183,7 +183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3072316452932013678, guid: da7b04b5c55aa254fa9db3cbbe599031, type: 3}
       propertyPath: m_Name
-      value: UI_SelectedRing
+      value: UI_SelectRing
       objectReference: {fileID: 0}
     - target: {fileID: 6496946256612220550, guid: da7b04b5c55aa254fa9db3cbbe599031, type: 3}
       propertyPath: unit
