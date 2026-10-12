@@ -3,26 +3,26 @@ using UnityEngine;
 
 public class UnitSelectUI : MonoBehaviour
 {
-  [SerializeField] Unit unit;
-  MeshRenderer selectRingUI;
+  [SerializeField] private Unit unit;
+  private MeshRenderer selectRingUI;
 
-  void Awake()
+  private void Awake()
   {
     selectRingUI = GetComponent<MeshRenderer>();
   }
 
-  void Start()
+  private void Start()
   {
     UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
     updateSelectUI();
   }
 
-  void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs empty)
+  private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs empty)
   {
     updateSelectUI();
   }
 
-  void updateSelectUI()
+  private void updateSelectUI()
   {
     if (UnitActionSystem.Instance.GetSelectedUnit() == unit)
     {

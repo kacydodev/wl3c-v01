@@ -5,7 +5,7 @@ public class GridObjectDebug : MonoBehaviour
 {
   [SerializeField] private TextMeshPro debugGridTextMark;
 
-  GridObject gridObject;
+  private GridObject gridObject;
 
   public virtual void SetGridObject(GridObject gridObject)
   {

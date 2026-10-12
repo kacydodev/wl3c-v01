@@ -3,19 +3,19 @@ using UnityEngine.InputSystem;
 
 public class MouseRaycast : MonoBehaviour
 {
-  static MouseRaycast instance;
-  static Camera targetCamera;
+  private static MouseRaycast instance;
+  private static Camera targetCamera;
 
   // To be selected in the inspector
-  [SerializeField] LayerMask raycastLayerMask;
+  [SerializeField] private LayerMask raycastLayerMask;
 
-  void Start()
+  private void Start()
   {
     instance = this;
     targetCamera = Camera.main;
   }
 
-  void Update()
+  private void Update()
   {
     transform.position = GetPosition();
   }

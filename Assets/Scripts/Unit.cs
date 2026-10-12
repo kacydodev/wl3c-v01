@@ -3,20 +3,20 @@ using UnityEngine.InputSystem;
 
 public class Unit : MonoBehaviour
 {
-  [SerializeField] float moveSpeed = 5f;
-  [SerializeField] float rotateSpeed = 10f;
-  [SerializeField] float stoppingDistance = 0.05f;
+  [SerializeField] private float moveSpeed = 5f;
+  [SerializeField] private float rotateSpeed = 10f;
+  [SerializeField] private float stoppingDistance = 0.05f;
 
-  Animator unitAnimator;
-  Vector3 targetPosition;
+  private Animator unitAnimator;
+  private Vector3 targetPosition;
 
-  void Awake()
+  private void Awake()
   {
     targetPosition = transform.position;
     unitAnimator = GetComponentInChildren<Animator>();
   }
 
-  void Update()
+  private void Update()
   {
     // Movement and Rotation Control
     if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)

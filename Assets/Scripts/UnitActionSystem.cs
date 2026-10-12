@@ -11,16 +11,16 @@ public class UnitActionSystem : MonoBehaviour
 
   [SerializeField] public Unit defaultUnit;
 
-  Unit selectedUnit;
-  [SerializeField] LayerMask unitsLayerMask;
+  private Unit selectedUnit;
+  [SerializeField] private LayerMask unitsLayerMask;
 
-  void Awake()
+  private void Awake()
   {
     Instance = this;
     SetSelectedUnit(defaultUnit);
   }
 
-  void Update()
+  private void Update()
   {
     if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
     {
@@ -38,9 +38,9 @@ public class UnitActionSystem : MonoBehaviour
     var mousePos = Mouse.current.position.ReadValue();
     var ray = Camera.main.ScreenPointToRay(mousePos);
 
-    if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, unitsLayerMask))
+    if (Physics.Raycast(ray, out var raycastHit, float.MaxValue, unitsLayerMask))
     {
-      if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
+      if (raycastHit.transform.TryGetComponent<Unit>(out var unit))
       {
         SetSelectedUnit(unit);
         return true;
@@ -56,8 +56,5 @@ public class UnitActionSystem : MonoBehaviour
   }
 
   // This function prevents exposing selectedUnit variable
-  public Unit GetSelectedUnit()
-  {
-    return selectedUnit;
-  }
+  public Unit GetSelectedUnit() => selectedUnit;
 }

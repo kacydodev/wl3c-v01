@@ -10,7 +10,9 @@ public class GridSystem
   private float cellSize;
   private GridObject[,] gridObjectArray;
 
-  public GridSystem(int width, int height, float cellSize)
+  private Unit unit;
+
+  public GridSystem(int width, int height, float cellSize, Unit unit)
   {
     this.width = width;
     this.height = height;
@@ -18,49 +20,44 @@ public class GridSystem
 
     gridObjectArray = new GridObject[width, height];
 
-    for (int x = 0; x < width; x++)
+    for (var x = 0; x < width; x++)
     {
-      for (int z = 0; z < height; z++)
+      for (var z = 0; z < height; z++)
       {
-        GridPosition gridPosition = new GridPosition(x, z);
-        gridObjectArray[x, z] = new GridObject(this, gridPosition);
+        var gridPosition = new GridPosition(x, z);
+        gridObjectArray[x, z] = new GridObject(this, gridPosition, unit);
       }
     }
   }
 
-  public Vector3 GetWorldPosition(int x, int z)
-  {
-    return new Vector3(x, 0, z) * cellSize;
-  }
+  public Vector3 GetWorldPosition(int x, int z) => new Vector3(x, 0, z) * cellSize;
 
   // Convert world position to grid position imposed by custom grid system
-  public GridPosition GetGridPosition(Vector3 worldPosition)
-  {
-    return new GridPosition(
-      // Use Mathf to convert float world pos to int
-      Mathf.FloorToInt(worldPosition.x / cellSize),
-      Mathf.FloorToInt(worldPosition.z / cellSize)
-    );
-  }
+  public GridPosition GetGridPosition(Vector3 worldPosition) => new(
+    // Use Mathf to convert float world pos to int
+    Mathf.FloorToInt(worldPosition.x / cellSize),
+    Mathf.FloorToInt(worldPosition.z / cellSize)
+  );
 
   // TODO: Remove on prod
   public void CreateDebugObjects(Transform debugPrefab)
   {
-    Transform gridObjectDebugParent = new GameObject("DEBUG_GridObjectDebugParent").transform;
+    Debug.Log(unit);
+    var gridObjectDebugParent = new GameObject("DEBUG_GridObjectDebugParent").transform;
 
-    for (int x = 0; x < width; x++)
+    for (var x = 0; x < width; x++)
     {
-      for (int z = 0; z < height; z++)
+      for (var z = 0; z < height; z++)
       {
-        Transform debugTransform = GameObject.Instantiate(
+        var debugTransform = GameObject.Instantiate(
           debugPrefab,
           GetWorldPosition(x, z),
           Quaternion.identity,
           gridObjectDebugParent
         );
-        
-        GridObjectDebug gridObjectDebug = debugTransform.GetComponent<GridObjectDebug>();
-        
+
+        var gridObjectDebug = debugTransform.GetComponent<GridObjectDebug>();
+
         if (gridObjectDebug != null)
         {
           gridObjectDebug.SetGridObject(gridObjectArray[x, z]);
@@ -73,10 +70,10 @@ public class GridSystem
   // TODO: Remove on prod
   public void DrawGridObject(int x, int z, Color color, float duration = 0f)
   {
-    Vector3 bottomLeft = GetWorldPosition(x, z);
-    Vector3 bottomRight = GetWorldPosition(x + 1, z);
-    Vector3 topLeft = GetWorldPosition(x, z + 1);
-    Vector3 topRight = GetWorldPosition(x + 1, z + 1);
+    var bottomLeft = GetWorldPosition(x, z);
+    var bottomRight = GetWorldPosition(x + 1, z);
+    var topLeft = GetWorldPosition(x, z + 1);
+    var topRight = GetWorldPosition(x + 1, z + 1);
 
     // Bottom edge
     Debug.DrawLine(bottomLeft, bottomRight, color, duration);
