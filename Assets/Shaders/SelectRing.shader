@@ -13,8 +13,11 @@ Shader "Custom/SelectRing"
 
     SubShader
     {
-        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
-        
+        Tags
+        {
+            "Queue" = "Transparent" "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline"
+        }
+
         LOD 100
         Blend SrcAlpha OneMinusSrcAlpha
         ZWrite Off
@@ -62,11 +65,11 @@ Shader "Custom/SelectRing"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                                float dist = length(IN.uv - 0.5);
+                float dist = length(IN.uv - 0.5);
                 float alpha = smoothstep(_Inner, _Inner + _Soften, dist) - smoothstep(_Outer, _Outer + _Soften, dist);
                 alpha *= _RingColor.a;
                 return half4(_RingColor.rgb, alpha);
-                
+
                 // half4 color = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv) * _BaseColor;
             }
             ENDHLSL

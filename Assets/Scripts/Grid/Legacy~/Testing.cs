@@ -8,8 +8,8 @@ public class Testing : MonoBehaviour
   [SerializeField] private float cellSize;
   
   // DEBUG_GridTextMark Object
-  [SerializeField] private Transform debugGridTextMark;
-  [SerializeField] private Transform gridDebugObjectParent;
+  [SerializeField] private Transform gridObjectDebug;
+  [SerializeField] private Transform gridObjectDebugParent;
   
   private GridSystem gridSystem;
 
@@ -20,7 +20,7 @@ public class Testing : MonoBehaviour
     cellSize = 2f;
     gridSystem = new GridSystem(width, height, cellSize);
     
-    gridSystem.CreateDebugObjects(debugGridTextMark, gridDebugObjectParent);
+    gridSystem.CreateDebugObjects(gridObjectDebug, gridObjectDebugParent);
   }
 
   void Update()
@@ -38,6 +38,4 @@ public class Testing : MonoBehaviour
       }
     }
   }
-  
-  
 }

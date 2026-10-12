@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 882809250483581448}
   - component: {fileID: 1186994592994438159}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: DEBUG_GridTextMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.2}
   m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &882809250483581448
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 4792191540810385722}
   - component: {fileID: 1560599309682550286}
   m_Layer: 0
-  m_Name: DEBUG_GridObjects
+  m_Name: GridObjectDebug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

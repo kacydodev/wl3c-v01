@@ -17,7 +17,7 @@ public class GridSystem
     this.cellSize = cellSize;
 
     gridObjectArray = new GridObject[width, height];
-    
+
     for (int x = 0; x < width; x++)
     {
       for (int z = 0; z < height; z++)
@@ -38,47 +38,45 @@ public class GridSystem
   {
     return new GridPosition(
       // Use Mathf to convert float world pos to int
-      Mathf.RoundToInt(worldPosition.x / cellSize),
-      Mathf.RoundToInt(worldPosition.z / cellSize)
+      Mathf.FloorToInt(worldPosition.x / cellSize),
+      Mathf.FloorToInt(worldPosition.z / cellSize)
     );
   }
 
   // TODO: Remove on prod
-  public void CreateDebugObjects(Transform debugPrefab, Transform parent = null)
+  public void CreateDebugObjects(Transform debugPrefab)
   {
+    Transform gridObjectDebugParent = new GameObject("DEBUG_GridObjectDebugParent").transform;
+
     for (int x = 0; x < width; x++)
     {
       for (int z = 0; z < height; z++)
       {
-        Vector3 spawnPos = GetWorldPosition(x, z);
-        if (parent != null)
-        {
-          spawnPos.y += parent.position.y;
-          spawnPos.x += parent.position.x;
-          spawnPos.z += parent.position.z;
-        }
-
-        Transform debugTransform = GameObject.Instantiate(debugPrefab, spawnPos, Quaternion.identity, parent);
+        Transform debugTransform = GameObject.Instantiate(
+          debugPrefab,
+          GetWorldPosition(x, z),
+          Quaternion.identity,
+          gridObjectDebugParent
+        );
         
         GridObjectDebug gridObjectDebug = debugTransform.GetComponent<GridObjectDebug>();
+        
         if (gridObjectDebug != null)
         {
           gridObjectDebug.SetGridObject(gridObjectArray[x, z]);
           gridObjectDebug.SetText(gridObjectArray[x, z].ToString());
         }
-        // GameObject.Instantiate(debugPrefab, spawnPos, Quaternion.Euler(90, 0, 0), parent);
-        // Transform.Instantiate(debugPrefab, GetWorldPosition(x, z), Quaternion.Euler(90, 0, 0), parent.transform);
       }
     }
   }
-  
+
   // TODO: Remove on prod
   public void DrawGridObject(int x, int z, Color color, float duration = 0f)
   {
-    Vector3 bottomLeft  = GetWorldPosition(x, z);
+    Vector3 bottomLeft = GetWorldPosition(x, z);
     Vector3 bottomRight = GetWorldPosition(x + 1, z);
-    Vector3 topLeft     = GetWorldPosition(x, z + 1);
-    Vector3 topRight    = GetWorldPosition(x + 1, z + 1);
+    Vector3 topLeft = GetWorldPosition(x, z + 1);
+    Vector3 topRight = GetWorldPosition(x + 1, z + 1);
 
     // Bottom edge
     Debug.DrawLine(bottomLeft, bottomRight, color, duration);
