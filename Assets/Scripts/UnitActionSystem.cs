@@ -6,18 +6,23 @@ using UnityEngine;
 
 public class UnitActionSystem : MonoBehaviour
 {
+  private Unit selectedUnit;
   public static UnitActionSystem Instance { get; private set; }
   public event EventHandler OnSelectedUnitChanged;
-
+  
   [SerializeField] public Unit defaultUnit;
-
-  private Unit selectedUnit;
   [SerializeField] private LayerMask unitsLayerMask;
 
   private void Awake()
   {
     Instance = this;
     SetSelectedUnit(defaultUnit);
+  }
+
+  private void Start()
+  {
+    GridPosition gridPosition = new GridPosition(3, 1);
+    GridLevelAlpha.Instance.SetUnitToGridPosition(gridPosition, defaultUnit);
   }
 
   private void Update()

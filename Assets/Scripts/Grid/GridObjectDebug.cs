@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GridObjectDebug : MonoBehaviour
 {
-  [SerializeField] private TextMeshPro debugGridTextMark;
-
   private GridObject gridObject;
 
   public virtual void SetGridObject(GridObject gridObject)
@@ -14,9 +12,10 @@ public class GridObjectDebug : MonoBehaviour
 
   public void SetText(string text)
   {
-    if (debugGridTextMark != null)
+    var debugText = GetComponentInChildren<TextMeshPro>();
+    if (debugText != null)
     {
-      debugGridTextMark.text = text;
+      debugText.text = text;
     }
   }
 }

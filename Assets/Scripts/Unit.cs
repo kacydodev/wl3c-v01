@@ -3,12 +3,12 @@ using UnityEngine.InputSystem;
 
 public class Unit : MonoBehaviour
 {
+  private Animator unitAnimator;
+  private Vector3 targetPosition;
+
   [SerializeField] private float moveSpeed = 5f;
   [SerializeField] private float rotateSpeed = 10f;
   [SerializeField] private float stoppingDistance = 0.05f;
-
-  private Animator unitAnimator;
-  private Vector3 targetPosition;
 
   private void Awake()
   {
@@ -46,6 +46,11 @@ public class Unit : MonoBehaviour
   }
 
   public void Move(Vector3 targetPosition)
+  {
+    this.targetPosition = targetPosition;
+  }
+  
+  public void SetTargetPosition(Vector3 targetPosition)
   {
     this.targetPosition = targetPosition;
   }

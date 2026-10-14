@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class UnitSelectUI : MonoBehaviour
 {
-  [SerializeField] private Unit unit;
   private MeshRenderer selectRingUI;
+  
+  [SerializeField] private Unit unit;
 
   private void Awake()
   {
